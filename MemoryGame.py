@@ -6,13 +6,16 @@ def show_sequence(sequence):
     time.sleep(0.7)
     print("\033[2J\033[H", end="")
 
-
 def get_list_from_user(difficulty):
-    answer = []
-    for i in range(difficulty):
-        number = int(input(f"Enter number {i + 1}: "))
-        answer.append(number)
-    return answer
+    while True:
+        user_input = input(f"Enter {difficulty} whole numbers separated by spaces: ")
+        try:
+            numbers = [int(number) for number in user_input.split()]
+            if len(numbers) == difficulty:
+                return numbers
+            print(f"Please enter exactly {difficulty} numbers.")
+        except ValueError:
+            print("Invalid input. Please enter whole numbers separated by spaces.")
 
 def generate_sequence(difficulty):
     sequence = []
