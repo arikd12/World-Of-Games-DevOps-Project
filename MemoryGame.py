@@ -23,5 +23,11 @@ def generate_sequence(difficulty):
         sequence.append(random.randint(1, 101))
     return sequence
 
+def is_list_equal(list1, list2):
+    return list1 == list2
+
 def play(difficulty):
-    return False
+    sequence = generate_sequence(difficulty)
+    show_sequence(sequence)
+    answer = get_list_from_user(difficulty)
+    return is_list_equal(sequence, answer)
