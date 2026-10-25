@@ -19,5 +19,10 @@ def get_exchange_rate():
 def convert_to_ils(usd_amount, exchange_rate):
     return usd_amount * exchange_rate
 
+def get_money_interval(difficulty, t):
+    lower = t - (5 - difficulty)
+    upper = t + (5 - difficulty)
+    return lower, upper
+
 def play(difficulty):
     return False
