@@ -1,3 +1,7 @@
+from MemoryGame import play as play_memory
+from GuessGame import play as play_guess
+from CurrencyRouletteGame import play as play_currency
+
 def welcome(name):
     return f"Hello {name} and welcome to the World of Games (WoG).\nHere you can find many cool games to play."
 
@@ -19,4 +23,15 @@ def load_game():
         if not difficulty.isdigit() or not 1 <= int(difficulty) <= 5:
             print("Invalid difficulty. Please enter a whole number between 1 and 5.")
 
-    return int(game_choice), int(difficulty)
+    game_choice = int(game_choice)
+    difficulty = int(difficulty)
+    if game_choice == 1:
+        result = play_memory(difficulty)
+    elif game_choice == 2:
+        result = play_guess(difficulty)
+    else:
+        result = play_currency(difficulty)
+    if result is True:
+        print("Congratulations! You won!")
+    else:
+        print("You lost or the game round was cancelled.")
