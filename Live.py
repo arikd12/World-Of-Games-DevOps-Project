@@ -2,8 +2,33 @@ from MemoryGame import play as play_memory
 from GuessGame import play as play_guess
 from CurrencyRouletteGame import play as play_currency
 
+
 def welcome(name):
-    return f"Hello {name} and welcome to the World of Games (WoG).\nHere you can find many cool games to play."
+    return (
+        f"Hello {name} and welcome to the World of Games (WoG).\n"
+        "Here you can find many cool games to play."
+    )
+
+
+def _prompt_integer(prompt, minimum, maximum, field_name):
+    while True:
+        try:
+            value = int(input(prompt).strip())
+        except ValueError:
+            print(
+                f"Invalid {field_name}. "
+                f"Please enter a whole number between {minimum} and {maximum}."
+            )
+            continue
+
+        if minimum <= value <= maximum:
+            return value
+
+        print(
+            f"Invalid {field_name}. "
+            f"Please enter a whole number between {minimum} and {maximum}."
+        )
+
 
 def load_game():
     print("Please choose a game to play:")
@@ -11,27 +36,21 @@ def load_game():
     print("2. Guess Game - Guess the number chosen by the computer.")
     print("3. Currency Roulette - Guess the value of a currency conversion.")
 
-    game_choice = ""
-    while not game_choice.isdigit() or not 1 <= int(game_choice) <= 3:
-        game_choice = input("Please choose a game (1-3): ").strip()
-        if not game_choice.isdigit() or not 1 <= int(game_choice) <= 3:
-            print("Invalid choice. Please enter a whole number between 1 and 3.")
+    game_choice = _prompt_integer("Please choose a game (1-3): ", 1, 3, "choice")
+    difficulty = _prompt_integer(
+        "Please choose game difficulty from 1 to 5: ", 1, 5, "difficulty"
+    )
 
-    difficulty = ""
-    while not difficulty.isdigit() or not 1 <= int(difficulty) <= 5:
-        difficulty = input("Please choose game difficulty from 1 to 5: ").strip()
-        if not difficulty.isdigit() or not 1 <= int(difficulty) <= 5:
-            print("Invalid difficulty. Please enter a whole number between 1 and 5.")
-
-    game_choice = int(game_choice)
-    difficulty = int(difficulty)
     if game_choice == 1:
         result = play_memory(difficulty)
     elif game_choice == 2:
         result = play_guess(difficulty)
     else:
         result = play_currency(difficulty)
+
     if result is True:
         print("Congratulations! You won!")
+    elif result is None:
+        print("The game round was cancelled because a required service was unavailable.")
     else:
-        print("You lost or the game round was cancelled.")
+        print("You lost. Better luck next time!")
