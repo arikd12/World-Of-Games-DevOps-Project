@@ -5,16 +5,16 @@ A Python command-line game collection.
 ## Requirements
 
 - Python 3.8 or later.
-- Internet access is needed for Currency Roulette if its exchange-rate service requires it.
+- Internet access may be required for Currency Roulette.
 
-`requirements.txt` is intentionally empty: the application uses Python standard-library modules and does not require third-party packages.
+`requirements.txt` is intentionally empty because the application uses only Python standard-library modules and requires no third-party packages.
 
 ## Run
 
 From the project root, run:
 
 ```powershell
-py MainGame.py
+py -m app.MainGame
 ```
 
 Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
@@ -25,6 +25,8 @@ Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
 - **Guess Game** — Guess the number selected by the computer.
 - **Currency Roulette** — Guess the value of a currency conversion.
 
-## Project files
+## Project structure
 
-The game modules and startup script are currently kept in the project root. As the project grows, they can be moved into a dedicated application directory while keeping `README.md` and `requirements.txt` at the root.
+- `app/` — Application startup script and game modules.
+- `README.md` — Project documentation.
+- `requirements.txt` — Empty; the application uses only standard-library modules.

@@ -1,4 +1,4 @@
-from Live import welcome, load_game
+from .Live import welcome, load_game
 
 
 def main():

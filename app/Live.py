@@ -1,6 +1,6 @@
-from MemoryGame import play as play_memory
-from GuessGame import play as play_guess
-from CurrencyRouletteGame import play as play_currency
+from .MemoryGame import play as play_memory
+from .GuessGame import play as play_guess
+from .CurrencyRouletteGame import play as play_currency
 
 
 def welcome(name):
