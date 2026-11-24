@@ -29,17 +29,19 @@ The score page is available at `http://127.0.0.1:5000/`.
 
 ## Run with Docker
 
-Build the image from the project root and publish its internal port `5000` on
-host port `8777`:
+Build and start the score service from the project root with Docker Compose:
 
-```powershell
-docker build -t world-of-games-scores .
-docker run --rm -p 8777:5000 world-of-games-scores
+```text
+docker compose up --build -d
 ```
 
-The score page is available at `http://localhost:8777/`. The container listens
-on `0.0.0.0:5000` with debug mode disabled. The image includes an initial
-`/Scores.txt` file containing `0`.
+Stop it with `docker compose down`. The score page is available at
+`http://localhost:8777/`; Compose publishes host port `8777` to the container's
+internal port `5000`. The image is tagged
+`docker.io/arikd12/world-of-games-scores:latest` for future Docker Hub
+publishing. The container listens on `0.0.0.0:5000` with debug mode disabled
+and includes an initial `/Scores.txt` file containing `0`. A direct
+`docker run` command is recorded in `docker-run-command.txt`.
 
 ## Games
 

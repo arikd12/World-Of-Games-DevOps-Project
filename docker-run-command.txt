@@ -1,0 +1,4 @@
+Build and start the score service with Docker Compose using `docker compose up --build -d`. It is available at http://localhost:8777/; stop it with `docker compose down`.
+
+To run the image directly after building it:
+docker run --rm -p 8777:5000 docker.io/arikd12/world-of-games-scores:latest
