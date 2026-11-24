@@ -58,5 +58,7 @@ def load_game():
             print("Congratulations! You won!")
     elif result is None:
         print("The game round was cancelled because a required service was unavailable.")
-    else:
+    elif result is False:
         print("You lost. Better luck next time!")
+    else:
+        print("The game did not complete, so no score was added.")

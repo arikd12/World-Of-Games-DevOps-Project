@@ -64,7 +64,7 @@ def play(difficulty):
         exchange_rate = get_exchange_rate()
     except RuntimeError as error:
         print(f"Error: {error}")
-        return False
+        return None
     correct_amount = convert_to_ils(usd_amount, exchange_rate)
     lower, upper = get_money_interval(difficulty, correct_amount)
     guess = get_guess_from_user(usd_amount)
