@@ -7,7 +7,7 @@ A Python command-line game collection.
 - Python 3.8 or later.
 - Internet access may be required for Currency Roulette.
 
-`requirements.txt` is intentionally empty because the application uses only Python standard-library modules and requires no third-party packages.
+Install the dependencies with `py -m pip install -r requirements.txt`.
 
 ## Run
 
@@ -19,17 +19,26 @@ py -m app.MainGame
 
 Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
 
+To start the score web server, run:
+
+```powershell
+py -m app.MainScores
+```
+
+The score page is available at `http://127.0.0.1:5000/`.
+
 ## Games
 
 - **Memory Game** — Remember a sequence of numbers and enter it correctly.
 - **Guess Game** — Guess the number selected by the computer.
 - **Currency Roulette** — Guess the value of a currency conversion.
 
-The shared score is stored in `Scores.txt` in the project root and is initialized
-on the first win.
+The score file location is configured in `app/Utils.py`. It is `/Scores.txt`
+inside Linux containers and the project-root `Scores.txt` on Windows, and is
+initialized on the first win.
 
 ## Project structure
 
 - `app/` — Application startup script, game modules, scoring, and shared utilities.
 - `README.md` — Project documentation.
-- `requirements.txt` — Empty; the application uses only standard-library modules.
+- `requirements.txt` — Python dependencies, including Flask for the score server.
