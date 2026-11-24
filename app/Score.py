@@ -2,7 +2,7 @@ import os
 import tempfile
 from pathlib import Path
 
-from .Utils import SCORES_FILE_NAME
+from .Utils import SCORES_FILE_NAME, SCORES_FILE_PATH
 
 
 class ScoreError(Exception):
@@ -67,14 +67,14 @@ def _write_score(score_path, score):
 
 
 def get_score():
-    return _read_score(Path(SCORES_FILE_NAME))
+    return _read_score(Path(SCORES_FILE_PATH))
 
 
 def add_score(difficulty):
     if type(difficulty) is not int or not 1 <= difficulty <= 5:
         raise ValueError("difficulty must be a whole number between 1 and 5")
 
-    score_path = Path(SCORES_FILE_NAME)
+    score_path = Path(SCORES_FILE_PATH)
     current_score = get_score()
     POINTS_OF_WINNING = (difficulty * 3) + 5
     new_score = current_score + POINTS_OF_WINNING

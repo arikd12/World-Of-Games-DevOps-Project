@@ -33,8 +33,9 @@ The score page is available at `http://127.0.0.1:5000/`.
 - **Guess Game** — Guess the number selected by the computer.
 - **Currency Roulette** — Guess the value of a currency conversion.
 
-The shared score is stored in `Scores.txt` in the project root and is initialized
-on the first win.
+The score file location is configured in `app/Utils.py`. It is `/Scores.txt`
+inside Linux containers and the project-root `Scores.txt` on Windows, and is
+initialized on the first win.
 
 ## Project structure
 
