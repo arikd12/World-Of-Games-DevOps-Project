@@ -19,13 +19,27 @@ py -m app.MainGame
 
 Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
 
-To start the score web server, run:
+To start the score web server locally, run:
 
 ```powershell
 py -m app.MainScores
 ```
 
 The score page is available at `http://127.0.0.1:5000/`.
+
+## Run with Docker
+
+Build the image from the project root and publish its internal port `5000` on
+host port `8777`:
+
+```powershell
+docker build -t world-of-games-scores .
+docker run --rm -p 8777:5000 world-of-games-scores
+```
+
+The score page is available at `http://localhost:8777/`. The container listens
+on `0.0.0.0:5000` with debug mode disabled. The image includes an initial
+`/Scores.txt` file containing `0`.
 
 ## Games
 
