@@ -25,8 +25,11 @@ Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
 - **Guess Game** — Guess the number selected by the computer.
 - **Currency Roulette** — Guess the value of a currency conversion.
 
+The shared score is stored in `Scores.txt` in the project root and is initialized
+on the first win.
+
 ## Project structure
 
-- `app/` — Application startup script, game modules, and shared utilities.
+- `app/` — Application startup script, game modules, scoring, and shared utilities.
 - `README.md` — Project documentation.
 - `requirements.txt` — Empty; the application uses only standard-library modules.
