@@ -29,7 +29,7 @@ def index():
         app.logger.error("Could not load the score: %s", error)
         return _score_page("<p>Score is unavailable.</p>"), 500
 
-    return _score_page(f"<h1>Scores Game</h1><p>Current score: {score}</p>")
+    return _score_page(f'<h1>The score is <span id="score">{score}</span></h1>')
 
 
 def score_server():
