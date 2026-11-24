@@ -66,12 +66,16 @@ def _write_score(score_path, score):
         raise ScoreError(message) from error
 
 
+def get_score():
+    return _read_score(Path(SCORES_FILE_NAME))
+
+
 def add_score(difficulty):
     if type(difficulty) is not int or not 1 <= difficulty <= 5:
         raise ValueError("difficulty must be a whole number between 1 and 5")
 
     score_path = Path(SCORES_FILE_NAME)
-    current_score = _read_score(score_path)
+    current_score = get_score()
     POINTS_OF_WINNING = (difficulty * 3) + 5
     new_score = current_score + POINTS_OF_WINNING
     _write_score(score_path, new_score)

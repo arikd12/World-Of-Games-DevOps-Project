@@ -7,7 +7,7 @@ A Python command-line game collection.
 - Python 3.8 or later.
 - Internet access may be required for Currency Roulette.
 
-`requirements.txt` is intentionally empty because the application uses only Python standard-library modules and requires no third-party packages.
+Install the dependencies with `py -m pip install -r requirements.txt`.
 
 ## Run
 
@@ -18,6 +18,14 @@ py -m app.MainGame
 ```
 
 Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
+
+To start the score web server, run:
+
+```powershell
+py -m app.MainScores
+```
+
+The score page is available at `http://127.0.0.1:5000/`.
 
 ## Games
 
@@ -32,4 +40,4 @@ on the first win.
 
 - `app/` — Application startup script, game modules, scoring, and shared utilities.
 - `README.md` — Project documentation.
-- `requirements.txt` — Empty; the application uses only standard-library modules.
+- `requirements.txt` — Python dependencies, including Flask for the score server.
