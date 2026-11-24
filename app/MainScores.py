@@ -27,7 +27,12 @@ def index():
         score = get_score()
     except ScoreError as error:
         app.logger.error("Could not load the score: %s", error)
-        return _score_page("<p>Score is unavailable.</p>"), 500
+        error_message = (
+            '<h1>The score is '
+            '<span id="score" style="color: red;">Score could not be loaded.</span>'
+            "</h1>"
+        )
+        return _score_page(error_message), 500
 
     return _score_page(f'<h1>The score is <span id="score">{score}</span></h1>')
 
