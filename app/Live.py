@@ -1,7 +1,7 @@
 from .MemoryGame import play as play_memory
 from .GuessGame import play as play_guess
 from .CurrencyRouletteGame import play as play_currency
-from .Score import add_score
+from .Score import ScoreError, add_score
 
 
 def welcome(name):
@@ -50,8 +50,12 @@ def load_game():
         result = play_currency(difficulty)
 
     if result is True:
-        add_score(difficulty)
-        print("Congratulations! You won!")
+        try:
+            add_score(difficulty)
+        except ScoreError as error:
+            print(f"You won, but your score could not be saved: {error}")
+        else:
+            print("Congratulations! You won!")
     elif result is None:
         print("The game round was cancelled because a required service was unavailable.")
     else:
