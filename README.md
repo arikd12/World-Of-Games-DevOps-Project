@@ -27,6 +27,6 @@ Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
 
 ## Project structure
 
-- `app/` — Application startup script and game modules.
+- `app/` — Application startup script, game modules, and shared utilities.
 - `README.md` — Project documentation.
 - `requirements.txt` — Empty; the application uses only standard-library modules.

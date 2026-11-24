@@ -1,10 +1,13 @@
 import random
 import time
 
+from .Utils import Screen_cleaner
+
+
 def show_sequence(sequence):
     print(sequence)
     time.sleep(0.7)
-    print("\033[2J\033[H", end="")
+    Screen_cleaner()
 
 def get_list_from_user(difficulty):
     while True:
