@@ -1,0 +1,8 @@
+services:
+  scores:
+    image: docker.io/arikd12/world-of-games-scores:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8777:5000"
