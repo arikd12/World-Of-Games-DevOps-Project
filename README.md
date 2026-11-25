@@ -1,81 +1,104 @@
 # World of Games
 
-A Python command-line game collection.
+A Python command-line game collection with a Flask score page and a Selenium
+end-to-end browser test.
 
-## Requirements
+## Components
+
+- `app/MainGame.py` and `app/Live.py` start the console game flow and dispatch
+  to the games.
+- `app/MemoryGame.py`, `app/GuessGame.py`, and
+  `app/CurrencyRouletteGame.py` implement the games.
+- `app/Score.py` reads and updates the saved score; `app/Utils.py` configures
+  the score file path.
+- `app/MainScores.py` serves the current score as a web page.
+- `tests/e2e.py` opens the score page in Chrome and validates the displayed
+  score.
+
+## Dependencies
 
 - Python 3.8 or later.
-- Internet access may be required for Currency Roulette.
+- Flask (`Flask>=2.3`) for the score service.
+- Selenium (`selenium>=4.0`) for the browser test; Chrome must be installed.
+- Currency Roulette may require internet access.
 
-Install the dependencies with `py -m pip install -r requirements.txt`.
+Install the Python dependencies from the project root:
 
-## Run
+```powershell
+py -m pip install -r requirements.txt
+```
 
-From the project root, run:
+`requirements.txt` lists Flask and Selenium. The games otherwise use Python's
+standard library.
+
+## Configuration and score storage
+
+The score file path is selected in `app/Utils.py`. When the console game runs
+on Windows, it reads and writes `Scores.txt` in the project root. On Linux,
+including the service container, the path is `/Scores.txt`.
+
+The score service listens inside its environment on `0.0.0.0:5000` with debug
+mode disabled. Docker Compose publishes that internal port as
+`http://localhost:8777/` on the host. The standard Docker image starts with an
+initial `/Scores.txt` containing `0`.
+
+## Start the console game
+
+From the project root:
 
 ```powershell
 py -m app.MainGame
 ```
 
-Enter your name, choose a game from 1 to 3, and select a difficulty from 1 to 5.
-
-To start the score web server locally, run:
+To run the score page directly on the host:
 
 ```powershell
 py -m app.MainScores
 ```
 
-The score page is available at `http://127.0.0.1:5000/`.
+On Windows, the local score page uses the project-root `Scores.txt` file and
+is available at `http://127.0.0.1:5000/`.
 
-## Run with Docker
+## Start the Docker service
 
-Build and start the score service from the project root with Docker Compose:
+From the project root:
 
-```text
+```powershell
 docker compose up --build -d
 ```
 
-Stop it with `docker compose down`. The score page is available at
-`http://localhost:8777/`; Compose publishes host port `8777` to the container's
-internal port `5000`. The image is tagged
-`docker.io/arikd12/world-of-games-scores:latest` for future Docker Hub
-publishing. The container listens on `0.0.0.0:5000` with debug mode disabled
-and includes an initial `/Scores.txt` file containing `0`. A direct
-`docker run` command is recorded in `docker-run-command.txt`.
-
-## End-to-end score test
-
-The browser test uses `tests/Scores.txt`, a dedicated fixture containing `100`.
-Compose mounts it read-only at `/Scores.txt`; the real game score file is not
-mounted or modified. Keep the fixture in place before starting the test service.
-The test's accepted range (1–1000) is only a browser-test condition, not an
-application score limit.
-
-Start the test service, run the test with Chrome available, then stop the
-service:
+Open `http://localhost:8777/`. Stop the service with:
 
 ```powershell
-docker compose -f docker-compose.yml -f docker-compose.test.yml up --build -d
-py -m pip install -r requirements.txt
-py tests/e2e.py
-docker compose -f docker-compose.yml -f docker-compose.test.yml down
+docker compose down
 ```
 
-The test waits for the score element and exits with status `0` on success or a
-nonzero status on failure.
+The image is tagged `docker.io/arikd12/world-of-games-scores:latest` for
+publishing to Docker Hub. The direct `docker run` command is recorded in
+`docker-run-command.txt`.
 
-## Games
+## Run the isolated browser test
 
-- **Memory Game** — Remember a sequence of numbers and enter it correctly.
-- **Guess Game** — Guess the number selected by the computer.
-- **Currency Roulette** — Guess the value of a currency conversion.
+The isolated test uses `tests/Scores.txt`, which contains `100`. The test
+Compose override mounts this dedicated fixture read-only at `/Scores.txt`;
+it does not mount or modify the console's real `Scores.txt`. Ensure the fixture
+exists before starting the container. The test accepts scores from 1 through
+1000; this is only the browser test's acceptance condition and is not a maximum
+score for the application.
 
-The score file location is configured in `app/Utils.py`. It is `/Scores.txt`
-inside Linux containers and the project-root `Scores.txt` on Windows, and is
-initialized on the first win.
+With Chrome installed, run these commands from the project root in
+PowerShell:
 
-## Project structure
+```powershell
+py -m pip install -r requirements.txt
+if (-not (Test-Path .\tests\Scores.txt -PathType Leaf)) { throw "Missing tests\Scores.txt fixture" }
+docker compose -f docker-compose.yml -f docker-compose.test.yml up --build -d
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+py tests\e2e.py
+$e2eExitCode = $LASTEXITCODE
+docker compose -f docker-compose.yml -f docker-compose.test.yml down
+if ($e2eExitCode -ne 0) { exit $e2eExitCode }
+```
 
-- `app/` — Application startup script, game modules, scoring, and shared utilities.
-- `README.md` — Project documentation.
-- `requirements.txt` — Python dependencies, including Flask for the score server.
+The test waits for the visible `score` element. It exits with status `0` on
+success and a nonzero status on failure.
