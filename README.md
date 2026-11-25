@@ -45,12 +45,20 @@ and includes an initial `/Scores.txt` file containing `0`. A direct
 
 ## End-to-end score test
 
-With the score service running at `http://127.0.0.1:8777/` and Chrome available,
-install the Python dependencies and run the Selenium test:
+The browser test uses `tests/Scores.txt`, a dedicated fixture containing `100`.
+Compose mounts it read-only at `/Scores.txt`; the real game score file is not
+mounted or modified. Keep the fixture in place before starting the test service.
+The test's accepted range (1–1000) is only a browser-test condition, not an
+application score limit.
+
+Start the test service, run the test with Chrome available, then stop the
+service:
 
 ```powershell
+docker compose -f docker-compose.yml -f docker-compose.test.yml up --build -d
 py -m pip install -r requirements.txt
 py tests/e2e.py
+docker compose -f docker-compose.yml -f docker-compose.test.yml down
 ```
 
 The test waits for the score element and exits with status `0` on success or a
