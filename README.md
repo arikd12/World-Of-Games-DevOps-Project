@@ -43,6 +43,19 @@ publishing. The container listens on `0.0.0.0:5000` with debug mode disabled
 and includes an initial `/Scores.txt` file containing `0`. A direct
 `docker run` command is recorded in `docker-run-command.txt`.
 
+## End-to-end score test
+
+With the score service running at `http://127.0.0.1:8777/` and Chrome available,
+install the Python dependencies and run the Selenium test:
+
+```powershell
+py -m pip install -r requirements.txt
+py tests/e2e.py
+```
+
+The test waits for the score element and exits with status `0` on success or a
+nonzero status on failure.
+
 ## Games
 
 - **Memory Game** — Remember a sequence of numbers and enter it correctly.
